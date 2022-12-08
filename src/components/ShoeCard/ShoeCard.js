@@ -12,7 +12,7 @@ const ShoeCard = ({
   price,
   salePrice,
   releaseDate,
-  numOfColors,
+  numOfColors
 }) => {
   // There are 3 variants possible, based on the props:
   //   - new-release
@@ -36,6 +36,13 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          <Tag variant={variant}>
+            {variant === 'default'
+              ? ''
+              : variant === 'on-sale'
+              ? 'sale'
+              : 'Just released!'}
+          </Tag>
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
@@ -51,8 +58,28 @@ const ShoeCard = ({
 };
 
 const Link = styled.a`
+  flex: 1 0 340px;
   text-decoration: none;
   color: inherit;
+`;
+
+const Tag = styled.div`
+  position: absolute;
+  right: -4px;
+  top: 12px;
+  width: fit-content;
+  padding: 7px 9px 9px 11px;
+  font-weight: 700;
+  color: hsl(0, 100%, 100%);
+  border-radius: 2px;
+  background-color: ${(p) => {
+    console.log(p.variant);
+    if (p.variant === 'default') {
+      return 'transparent';
+    } else if (p.variant === 'on-sale') {
+      return `${COLORS.primary}`;
+    } else return `${COLORS.secondary}`;
+  }};
 `;
 
 const Wrapper = styled.article``;
@@ -61,9 +88,14 @@ const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  border-radius: 16px 16px 4px 4px;
+  width: 100%;
+`;
 
 const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
 `;
 
